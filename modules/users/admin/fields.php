@@ -313,6 +313,33 @@ if ($nv_Request->isset_request('save', 'post')) {
         } else {
             $dataform['field_choices'] = serialize(['current_date' => $dataform['current_date']]);
         }
+    } elseif ($dataform['field_type'] == 'matrix') {
+        $matrix_rows = trim($nv_Request->get_string('matrix_rows', 'post', ''));
+        $matrix_cols = trim($nv_Request->get_string('matrix_cols', 'post', ''));
+
+        if (empty($matrix_rows) || empty($matrix_cols)) {
+            $error = 'Vui lòng nhập tiêu đề hàng và cột';
+        } else {
+            // Chuyển từ textarea thành mảng (mỗi dòng = 1 item)
+            $rows_array = array_filter(array_map('trim', explode("\n", $matrix_rows)));
+            $cols_array = array_filter(array_map('trim', explode("\n", $matrix_cols)));
+
+            if (empty($rows_array) || empty($cols_array)) {
+                $error = 'Vui lòng nhập ít nhất 1 hàng và 1 cột';
+            } else {
+                // Lưu vào field_choices
+                $dataform['field_choices'] = serialize([
+                    'rows' => array_values($rows_array),
+                    'cols' => array_values($cols_array)
+                ]);
+                $dataform['match_type'] = 'none';
+                $dataform['match_regex'] = '';
+                $dataform['func_callback'] = '';
+                $dataform['min_length'] = 0;
+                $dataform['max_length'] = 16777219;
+                $dataform['default_value'] = '';
+            }
+        }
     } else {
         $dataform['choicetypes'] = $nv_Request->get_string('choicetypes', 'post', '');
         $dataform['match_type'] = 'none';
@@ -503,7 +530,8 @@ $array_field_type = [
     'select' => $lang_module['field_type_select'],
     'radio' => $lang_module['field_type_radio'],
     'checkbox' => $lang_module['field_type_checkbox'],
-    'multiselect' => $lang_module['field_type_multiselect']
+    'multiselect' => $lang_module['field_type_multiselect'],
+    'matrix' => $lang_module['field_type_matrix']
 ];
 
 $array_choice_type = [

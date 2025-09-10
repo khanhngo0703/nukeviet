@@ -303,6 +303,14 @@ $lang_module['field_type_select'] = 'Lựa chọn thả xuống (selectbox)';
 $lang_module['field_type_radio'] = 'Một lựa chọn (radio)';
 $lang_module['field_type_checkbox'] = 'Nhiều lựa chọn (checkbox)';
 $lang_module['field_type_multiselect'] = 'Nhiều lựa chọn thả xuống (multi selectbox)';
+
+// thêm định nghĩa kiểu dữ liệu ma trận
+$lang_module['field_type_matrix'] = 'Ma trận (matrix)';
+$lang_module['matrix_rows'] = 'Số hàng';
+$lang_module['matrix_cols'] = 'Số cột';
+$lang_module['matrix_row_titles'] = 'Tiêu đề hàng';
+$lang_module['matrix_col_titles'] = 'Tiêu đề cột';
+
 $lang_module['field_type_note'] = 'Giá trị sẽ không thay đổi được khi đã lưu';
 $lang_module['field_class'] = 'Thuộc tính class html';
 $lang_module['field_size'] = 'Kích thước ô nhập liệu';

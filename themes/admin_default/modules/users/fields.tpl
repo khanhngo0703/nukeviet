@@ -263,6 +263,29 @@
                 <!-- END: loop_field_choice -->
             </tbody>
         </table>
+        <table class="table table-striped table-bordered table-hover" id="matrixfields" {DATAFORM.display_matrixfields}>
+    <caption><em class="fa fa-file-text-o">&nbsp;</em>{LANG.field_options_matrix}</caption>
+    <colgroup>
+        <col class="w250" />
+        <col />
+    </colgroup>
+    <tbody>
+        <tr>
+            <td>{LANG.field_matrix_rows}</td>
+            <td>
+                <textarea name="matrix_rows" class="form-control" rows="3">{DATAFORM.matrix_rows}</textarea>
+                <small>{LANG.field_matrix_rows_note}</small>
+            </td>
+        </tr>
+        <tr>
+            <td>{LANG.field_matrix_cols}</td>
+            <td>
+                <textarea name="matrix_cols" class="form-control" rows="3">{DATAFORM.matrix_cols}</textarea>
+                <small>{LANG.field_matrix_cols_note}</small>
+            </td>
+        </tr>
+    </tbody>
+</table>
     </div>
     <div style="margin-left: 350px;">
         <input type="hidden" value="{DATAFORM.system}" name="system">

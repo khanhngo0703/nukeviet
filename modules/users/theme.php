@@ -207,6 +207,38 @@ function user_register($gfx_chk, $checkss, $data_questions, $array_field_config,
                         $xtpl->parse('main.field.loop.multiselect.loop');
                     }
                     $xtpl->parse('main.field.loop.multiselect');
+                } elseif ($row['field_type'] == 'matrix') {
+                    // Lấy cấu hình rows, cols từ field_choices
+                    $matrix_rows = !empty($row['field_choices']['rows']) ? $row['field_choices']['rows'] : [];
+                    $matrix_cols = !empty($row['field_choices']['cols']) ? $row['field_choices']['cols'] : [];
+
+                    // Giá trị đã lưu (nếu có)
+                    $matrix_value = !empty($row['value']) ? json_decode($row['value'], true) : [];
+
+                    foreach ($matrix_rows as $rkey => $rval) {
+                        $xtpl->assign('MATRIX_ROW', [
+                            'rkey' => $rkey,
+                            'rval' => $rval
+                        ]);
+
+                        foreach ($matrix_cols as $ckey => $cval) {
+                            $xtpl->assign('MATRIX_COL', [
+                                'id'      => $row['fid'] . '_' . $rkey . '_' . $ckey,
+                                'name'    => 'custom_fields[' . $row['field'] . '][' . $rkey . '][]',
+                                'ckey'    => $ckey,
+                                'cval'    => $cval,
+                                'checked' => (isset($matrix_value[$rkey]) && in_array($ckey, $matrix_value[$rkey]))
+                                    ? ' checked="checked"'
+                                    : ''
+                            ]);
+                            $xtpl->parse('main.field.loop.matrix.col');
+                        }
+
+                        $xtpl->parse('main.field.loop.matrix.row');
+                    }
+
+                    $xtpl->assign('FIELD', $row);
+                    $xtpl->parse('main.field.loop.matrix');
                 }
                 $xtpl->parse('main.field.loop');
                 $have_custom_fields = true;
@@ -440,7 +472,7 @@ function user_openid_login($attribs, $op_process)
     $op_process_count = count($op_process);
 
     if ($op_process_count > 1) {
-        foreach($op_process as $process => $val) {
+        foreach ($op_process as $process => $val) {
             $xtpl->assign('ACTION', [
                 'key' => $process,
                 'name' => $lang_module['openid_processing_' . $process]
