@@ -534,6 +534,38 @@ if (defined('NV_IS_USER_FORUM')) {
                         $xtpl->parse('main.edit_user.field.loop.multiselect.loop');
                     }
                     $xtpl->parse('main.edit_user.field.loop.multiselect');
+                } elseif ($row['field_type'] == 'matrix') {
+                    $matrix = $row['field_choices']; 
+                    $matrix_value = !empty($row['value']) ? $row['value'] : [];
+                    
+                    foreach ($matrix['cols'] as $c_key => $c_title) {
+                        $xtpl->assign('MATRIX_COL', [
+                            'MATRIX_COL' => $c_title,
+                            'MATRIX_COL_KEY' => $c_key
+                        ]);
+                        $xtpl->parse('main.edit_user.field.loop.matrix.matrix_cols');
+                    }
+
+                    foreach ($matrix['rows'] as $r_key => $r_title) {
+                        $xtpl->assign('MATRIX_ROW', [
+                            'MATRIX_ROW' => $r_title,
+                            'MATRIX_ROW_KEY' => $r_key
+                        ]);
+
+                        foreach ($matrix['cols'] as $c_key => $c_title) {
+                            $value = isset($matrix_value[$r_key][$c_key]) ? $matrix_value[$r_key][$c_key] : '';
+                            $xtpl->assign('MATRIX_COL', [
+                                'MATRIX_COL' => $c_title,
+                                'MATRIX_COL_KEY' => $c_key,
+                                'MATRIX_VALUE' => $value
+                            ]);
+                            $xtpl->parse('main.edit_user.field.loop.matrix.matrix_rows.matrix_cols');
+                        }
+
+                        $xtpl->parse('main.edit_user.field.loop.matrix.matrix_rows');
+                    }
+
+                    $xtpl->parse('main.edit_user.field.loop.matrix');
                 }
                 $xtpl->parse('main.edit_user.field.loop');
                 $have_custom_fields = true;

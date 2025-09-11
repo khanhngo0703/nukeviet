@@ -224,6 +224,22 @@ foreach ($array_field_config as $row_f) {
                     'mess' => sprintf($lang_module['field_match_type_error'], $row_f['title'])
                 ]);
             }
+        } elseif ($row_f['field_type'] == 'matrix') {
+            if (empty($value) || !is_array($value)) {
+                $value = [];
+            } else {
+                $newValue = [];
+                foreach ($value as $rKey => $cols) {
+                    foreach ($cols as $cKey => $val) {
+                        if ($val == '1') {
+                            $newValue[$rKey][$cKey] = '1';
+                        }
+                    }
+                }
+                $value = $newValue;
+            }
+
+            $value = serialize($value);
         }
 
         $custom_fields[$row_f['field']] = $value;

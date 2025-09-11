@@ -219,6 +219,32 @@
                             <!-- END: loop -->
                         </select>
                         <!-- END: multiselect -->
+                        <!-- BEGIN: matrix -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <!-- BEGIN: matrix_cols -->
+            <th>{MATRIX_COL.MATRIX_COL}</th>
+            <!-- END: matrix_cols -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- BEGIN: matrix_rows -->
+        <tr>
+            <td><strong>{MATRIX_ROW.MATRIX_ROW}</strong></td>
+            <!-- BEGIN: matrix_cols -->
+            <td>
+                <input type="checkbox" 
+       name="custom_fields[{FIELD.field}][{MATRIX_ROW.MATRIX_ROW_KEY}][{MATRIX_COL.MATRIX_COL_KEY}]" 
+       value="{MATRIX_COL.MATRIX_VALUE}" {MATRIX_COL.MATRIX_CHECKED}>
+            </td>
+            <!-- END: matrix_cols -->
+        </tr>
+        <!-- END: matrix_rows -->
+    </tbody>
+</table>
+<!-- END: matrix -->
                     </td>
                 </tr>
                 <!-- END: loop -->
