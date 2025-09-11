@@ -600,6 +600,7 @@ if (defined('NV_IS_USER_FORUM')) {
                         $xtpl->assign('MATRIX_COL', [
                             'MATRIX_COL' => $c_title,
                             'MATRIX_COL_KEY' => $c_key,
+                            'MATRIX_VALUE'    => '1',
                             'MATRIX_CHECKED' => $checked
                         ]);
                         $xtpl->parse('main.edit_user.field.loop.matrix.matrix_rows.matrix_cols');
